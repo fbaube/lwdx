@@ -2,7 +2,7 @@
 Lightweight document transformations. 
 * LwDITA-based structured modular documentation in XML/XHTML/Markdown 
 * Based on an emerging [OASIS standard](https://github.com/oasis-open/dita-lightweight) (although strict compliance is _not_ guaranteed) 
-* Roundtrip transformations among all three formats for authoring-'n-publishing freedom-'n-flexibility 
+* Roundtrip conversions among all three formats for authoring-&-publishing freedom-&-flexibility 
 * Straightforward XML mixed content handling 
 * Avoids the horrors of Golang XML annotations 
 ## Contains 
@@ -19,7 +19,9 @@ Lightweight document transformations.
 ## Missing
 * Tests =:-O 
 * XML entity substitutions (but didn't you get the memo? you're sposta use DITA `conref`)
-* A schema-driven WYSIWYG IBE (in-browser editor) (but this is roadmapped) 
 * Details of comment handlng in Markdown (note that LwDITA uses CommonMark with extensions) 
+## Roadmap 
+* A schema-driven WYSIWYG IBE (in-browser editor, probably based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
+* Integration with DITA for Small Teams [D4ST](http://www.dita-for-small-teams.org/)
 ## Contributing
 * Contact me at fbaube at welho daaht com 
