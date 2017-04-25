@@ -21,7 +21,7 @@ Lightweight document transformations.
 * Tests =:-O 
 * XML entity substitutions (but didn't you get the memo? yer sposta use DITA `conref`)
 * Support for `ditavar` files for conditional text substitution and conditional publishing 
-* Details of comment handling in Markdown (note that LwDITA rellies on CommonMark, with extensions) 
+* Details of comment handling in Markdown, and how it can be used to support roundtripping for complex LwDITA tags (note that LwDITA relies on CommonMark, with extensions) 
 ## Roadmap 
 * A schema-driven WYSIWYG IBE (_in-browser editor_, probably based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
 * Integration with DITA for Small Teams [D4ST](http://www.dita-for-small-teams.org/)
