@@ -6,8 +6,8 @@ Lightweight document transformations.
 * Straightforward XML mixed content handling 
 * Avoids the horrors of Golang XML annotations 
 ## Contains 
-* CLI commands
 * API
+* CLI commands 
 ## Features
 * Relies on Golang `encoder/xml` package for parsing & tokenization
 * Hides as much XML & DITA complexity as possible
@@ -19,10 +19,12 @@ Lightweight document transformations.
 * (Future:TBS) Dual licensing to provide an option for unencumbered commercial use 
 ## Missing
 * Tests =:-O 
-* XML entity substitutions (but didn't you get the memo? you're sposta use DITA `conref`)
-* Details of comment handlng in Markdown (note that LwDITA uses CommonMark with extensions) 
+* XML entity substitutions (but didn't you get the memo? yer sposta use DITA `conref`)
+* Support for `ditavar` files for conditional text substitution and conditional publishing 
+* Details of comment handling in Markdown (note that LwDITA rellies on CommonMark, with extensions) 
 ## Roadmap 
-* A schema-driven WYSIWYG IBE (in-browser editor, probably based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
+* A schema-driven WYSIWYG IBE (_in-browser editor_, probably based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
 * Integration with DITA for Small Teams [D4ST](http://www.dita-for-small-teams.org/)
+* Enhanced support for common DITA mechanisms like conref files and glossary files 
 ## Contributing
 * Contact me at fbaube at welho daaht com 
