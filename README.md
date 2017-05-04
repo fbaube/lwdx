@@ -1,6 +1,6 @@
 # lwdx
 Lightweight document transformations based on markup.
-* Accepts and processes content authored in three interoperable input formats: XDITA _XML_, HDITA _HTML5_, MDITA _Markdown_ (n.b. this is a fundamental premise of LwDITA) 
+* Accepts and processes content authored in three interoperable input formats: XDITA _xml_, HDITA _html5_, MDITA _markdown_ (n.b. this feature is a fundamental premise of LwDITA) 
 * Documents are assembled from _maps_ that transclude modular, structured _topics_ (n.b. this feature is straight from DITA 1.X) 
 * This implementation is based on the emerging [OASIS standard](https://github.com/oasis-open/dita-lightweight) (but compliance is very much _not_ guaranteed) 
 * The goal is roundtrip conversions among all three formats for freedom+flexibility in authoring+publishing  
@@ -24,12 +24,12 @@ Lightweight document transformations based on markup.
 * XML DTD-style entity substitutions (but didn't you get the memo? yer sposta use DITA `conref`)
 * Details of comment handling in Markdown, and how it can support roundtripping for complex LwDITA tags (note that LwDITA relies on CommonMark with extensions) 
 ## TODOs & Roadmap
-* Implement character entities  
-* Publishing! (this is the first step to usefulness, and will be done by using the DITA-OT's preprocessing stage as a guide) 
-* A schema-driven WYSIWYG IBE (in-browser editor, probably oughta be based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
-* Some level of integration with _DITA for Small Teams_ [D4ST](http://www.dita-for-small-teams.org/)
+* Implement character entities, partly to enhance the input parser comparisons 
+* Publishing! (this is the first step to usefulness, and will be done along the lines of the DITA-OT's preprocessing stage) 
+* A schema-driven WYSIWYG IBE (in-browser editor, which probably oughta be based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
+* Some level of integration with _DITA for Small Teams_ [_D4ST_](http://www.dita-for-small-teams.org/)
 * Enhanced support for common DITA mechanisms like conref files and glossary files 
-* LwDITA-style specialization-by-example 
+* Support for LwDITA-style specialization-by-example 
 * _Not_ roadmapped: Support for `ditaval` files for conditional publishing 
 ## Contributing
 * Contact me at fbaube at welho daaht com 
