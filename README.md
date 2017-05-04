@@ -1,5 +1,5 @@
 # lwdx
-Lightweight document transformations based on markup.
+Lightweight document transformations and assemblies based on familiar markups.
 * Accepts and processes content authored in three interoperable input formats: XDITA _xml_, HDITA _html5_, MDITA _markdown_ (n.b. this feature is a fundamental premise of LwDITA) 
 * Documents are assembled from _maps_ that transclude modular, structured _topics_ (n.b. this feature is straight from DITA 1.X) 
 * This implementation is based on the emerging [OASIS standard](https://github.com/oasis-open/dita-lightweight) (but compliance is very much _not_ guaranteed) 
