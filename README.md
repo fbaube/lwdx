@@ -25,8 +25,7 @@ Lightweight document transformations & assemblies, based on familiar markups and
 ## TODOs & Roadmap
 * Implement character entities, partly to enhance the input parser comparisons 
 * Publishing! (this is the first step to usefulness, and will be done along the lines of the DITA-OT's preprocessing stage) 
-* A schema-driven WYSIWYG IBE (in-browser editor, which probably oughta be based on [CodeMirror](https://codemirror.net/demo/xmlcomplete.html)) 
-* Some level of integration with _DITA for Small Teams_ [_D4ST_](http://www.dita-for-small-teams.org/)
+* A schema-driven WYSIWYG IBE (in-browser editor, which probably oughta be based on [Quill](https://quilljs.com/) 
 * Enhanced support for common DITA mechanisms like conref files and glossary files 
 * Support for LwDITA-style specialization-by-example 
 * _Not_ roadmapped: Support for `ditaval` files for conditional publishing 
