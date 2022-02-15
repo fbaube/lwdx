@@ -37,7 +37,10 @@ Lightweight document transformations & assemblies, based on familiar markups and
 ```mermaid
   graph TD;
       A-->B;
-      A-->C;
-      B-->D;
+      B-->C;
       C-->D;
+      D-->E;
+      B-->B1
+      C-->C1
+      D-->D1
 ```
