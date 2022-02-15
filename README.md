@@ -31,3 +31,13 @@ Lightweight document transformations & assemblies, based on familiar markups and
 * _Not_ roadmapped: Support for `ditaval` files for conditional publishing 
 ## Contributing
 * Contact me at fbaube at welho daaht com 
+
+## mermaid test
+
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
