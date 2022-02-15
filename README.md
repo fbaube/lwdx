@@ -35,7 +35,7 @@ Lightweight document transformations & assemblies, based on familiar markups and
 ## mermaid test
 
 ```mermaid
-  graph TD;
+  graph LR;
       A-->B;
       B-->C;
       C-->D;
