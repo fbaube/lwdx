@@ -13,6 +13,7 @@ Lightweight document transformations & assemblies, based on familiar markups and
 * Golang API
 * Web UI 
 ## Features
+* _simplex sigillum veri_
 * Rely on Golang's [`encoder/xml`](https://godoc.org/encoding/xml) package for parsing & tokenization (but which fumbles with XML namespaces) 
 * Hide as much XML & DITA complexity as possible (Bell Labs UNIX "NJ Style": _It is slightly better to be simple than correct._)
 * Format input files opinionatedly (like `gofmt`), which simplifies diff'ing for changes under version control 
