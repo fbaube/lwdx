@@ -1,22 +1,28 @@
 package lwdx
 
-// THIS FILE is based mostly on the series of PDF dpcuments
-//
+// THIS FILE is based mostly on the official LwDITA PDF dpcuments.
 
-// LwTag is a generic "tag" for a structure in a LwDoc. -n-
-// It has a "master" ComponentName and variants for (XHM)DITA.
-type LwTag struct {
+// LwD_XMH_gtag is a generic "tag" used to identify markup structures
+// (both elements and attributes) that are common to all three flavors
+// of LwDITA.
+//
+// It has a "master" ComponentName and the variants for (XHM)DITA.
+// .
+type LwD_XMH_gtag struct {
 	ComponentName string
 	Xdita         string
 	Hdita         string
 	Mdita         string
 }
 
-// BlockTags is all the tags that either (a) are considered to be block tags
+// BLK_tags is all the tags that either (a) are considered to be block tags
 // by HTML & CSS, or (b) should in any case be output starting on a new line.
 // The values here should be based on references, and not just pulled out of
 // a butt.
-var BlockTags = []string{
+//
+// Ref: TODO: TBS
+// .
+var BLK_tags = []string{
 	"topic",
 	"title",
 	"shortdesc",
@@ -47,10 +53,13 @@ var BlockTags = []string{
 	"navtitle",
 }
 
-// InlineTags is all the tags that should be output on
-// "the same line". The values here should be based on
-// references, and not just pulled out of a butt.
-var InlineTags = []string{
+// INL_tags is all the tags that should be output on
+// "the same line". The values here should be based
+// on references, and not just pulled out of a butt.
+//
+// Ref: TODO: TBS
+// .
+var INL_tags = []string{
 	"b",
 	"i",
 	"u",
@@ -63,7 +72,10 @@ var InlineTags = []string{
 // OldTags is Appendix A.1 DITA 1.3 elements in LwDITA -n-
 // "This topic lists the DITA 1.3 elements that are available in LwDITA.
 // It also lists how to represent them in XDITA, HDITA, and MDITA."
-var OldTags = []LwTag{
+//
+// Ref: https://docs.oasis-open.org/dita/LwDITA/v1.0/cn02/LwDITA-v1.0-cn02.html#concept_ig4_cfb_dy
+// .
+var LwD_Dita13_XMH_gtags = []LwD_XMH_gtag{
 	{"Component", "XDITA", "HDITA", "MDITA"},
 	{"Alt text", "<alt>", "Attr on <img>", "[text]"},
 	{"Body", "<body>", "<body>", "N/A"},
@@ -81,6 +93,10 @@ var OldTags = []LwTag{
 	{"Image", "<image>", "<img>",
 		"![alt text for an image](images/image_name.jpg)"},
 	{"Italics", "<i>", "<em>", "* or _"},
+	{"Key def", "<keydef>", "<div data-class=\"keydef\">",
+		"FIXME (Extended profile) <div data-class=\"keydef\"> in HDITA syntax"},
+	{"Link text", "<linktext>", "<span data-class=\"linktext\">",
+		"FIXME (Extended profile) <span data-class=\"linktext\">"},
 	{"List item", "<li>", "<li>", "' -,+,* for ul; 0-9,.,) for ol"},
 	{"Map", "<map>", "<nav>", "N/A"},
 	{"Note", "<note>", "<p data-hd-class=\"note\">", "XDITA.<note>"},
@@ -91,7 +107,7 @@ var OldTags = []LwTag{
 	{"Pre text", "<pre>", "<pre>", "```text```"},
 	{"Prolog", "<prolog>", "<meta>", "YAML.hdr"},
 	{"Section", "<section>", "<section>", "##"},
-	{"Short description", "<shortdesc>", "<p data-hd-class=\"shortdesc\">",
+	{"Short descr", "<shortdesc>", "<p data-hd-class=\"shortdesc\">",
 		"YAML.hdr.var shortdesc (yes|no) says if first para is a short desc"},
 	{"Table", "<simpletable>", "<table>", "GH-MD syntax, using | and -"},
 	{"S.tbl entry", "<stentry>", "<td>", "See Table"},
@@ -102,7 +118,7 @@ var OldTags = []LwTag{
 	{"Title", "<title>", "<h1> topic, <h2> section", "# topic, ## section"},
 	{"Topic", "<topic>", "<article>", "N/A"},
 	{"Topic metadata", "<topicmeta>", "N/A", "N/A"},
-	{"Topicreference", "<topicref>", "<href> inside a <li>",
+	{"Topic reference", "<topicref>", "<href> inside a <li>",
 		"[link](/URI 'title') inside a list item"},
 	{"Underline", "<u>", "N/A", "N/A"},
 	{"Unordered list", "<ul>", "<ul>", "See list item"},
@@ -113,7 +129,10 @@ var OldTags = []LwTag{
 // to represent them in XDITA and HDITA. These new elements are not avail-
 // able in the MDITA core profile and, if needed, can be represented with
 // their raw HDITA equivalents as part of the MDITA extended profile."
-var NewTags = []LwTag{
+//
+// Ref: TODO: TBS
+// .
+var LwD_New_XMH_gtags = []LwD_XMH_gtag{
 	{"Component", "XDITA", "HDITA", "MDITA"},
 	{"Audio", "<audio>", "<audio>", "XDITA.<audio>"},
 	{"Controls", "<controls>", "<audio|video>.@controls", "XDITA.@controls"},
@@ -128,7 +147,10 @@ var NewTags = []LwTag{
 // OldAtts is Appendix A.3 DITA 1.3 attributes in LwDITA -n-
 // "This topic lists the DITA 1.3 attributes available in LwDITA,
 // and how to represent them in XDITA and HDITA."
-var OldAtts = []LwTag{
+//
+// Ref: TODO: TBS
+// .
+var OldAtts = []LwD_XMH_gtag{
 	{"Component", "XDITA", "HDITA", "MDITA"},
 	{"Content reference", "@conref", "@data-hd-conref", "XDITA.@conref"},
 	{"Direction", "@dir", "@dir", "XDITA.@dir"},

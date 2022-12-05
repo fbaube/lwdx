@@ -2,27 +2,27 @@ package lwdx
 
 import (
 	"fmt"
-	"os"
 	"github.com/fbaube/gtoken"
+	"os"
 	// "github.com/fbaube/gtree"
 )
 
 // SetLwdTagType sets IsBlock, IsInline, IsUnseen, or none.
 func SetLwdTagType(N *gtoken.GToken) bool {
-// func SetLwdTagType(N *gtree.GTag) bool {
+	// func SetLwdTagType(N *gtree.GTag) bool {
 	var i, ilim int
 	N.IsBlock = false
 	N.IsInline = false
-	ilim = len(BlockTags)
+	ilim = len(BLK_tags)
 	for i = 0; i < ilim; i++ {
-		if N.GName.Local == BlockTags[i] {
+		if N.GName.Local == BLK_tags[i] {
 			N.IsBlock = true
 			return true
 		}
 	}
-	ilim = len(InlineTags)
+	ilim = len(INL_tags)
 	for i = 0; i < ilim; i++ {
-		if N.GName.Local == InlineTags[i] {
+		if N.GName.Local == INL_tags[i] {
 			N.IsInline = true
 			return true
 		}
