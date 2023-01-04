@@ -1,5 +1,5 @@
 # lwdx
-_This repo is a placeholder for a still-unnamed app currently under development._
+_<b>This repo is a placeholder</b> for a still-unnamed app currently under development._
 
 Lightweight document transformations & assemblies, based on familiar markups and simple tools.
 * Accept and process content authored in three interoperable input formats: XDITA _xml_, HDITA _html5_, MDITA _markdown_ (Note: this interop is a fundamental premise of LwDITA) 
