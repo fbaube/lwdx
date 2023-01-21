@@ -4,6 +4,7 @@ package lwdx
 
 import (
 	"fmt"
+	"sort"
 	// SU "github.com/fbaube/stringutils"
 )
 
@@ -86,41 +87,70 @@ func init() {
 	TagInfo["test2"] = TagSummary{"BLCK", "INLN"}
 	setSchemaAndBLKorINL(HtmlBlockTags, false, "BLCK")
 	setSchemaAndBLKorINL(HtmlInlineTags, false, "INLN")
+	setSchemaAndBLKorINL(HtmlEmbedTags, false, "EMBD")
 	setSchemaAndBLKorINL(LwDitaBlockTags, true, "BLCK")
 	setSchemaAndBLKorINL(LwDitaInlineTags, true, "INLN")
 	setSchemaAndBLKorINL(LwDitaModelessTags, true, "INLN")
 
-	var BLCKs, INLNs, BOTHs, EMBDs string
-	for k, v := range TagInfo {
-		if v.Html5Mode == "" && v.LwditaMode == "" {
+	var BLCKs, INLNs, BOTHs, EMBDs []string
+	for tag, v := range TagInfo {
+		Hmode := v.Html5Mode
+		Lmode := v.LwditaMode
+		if Hmode == "" && Lmode == "" {
 			panic("BLEAGH")
 		}
-		var agreedMode TagMode
-		// fmt.Printf("DBG: %s: \t%s \t%s \n",
-		//	k, v.Html5Mode, v.LwditaMode)
-		// fmt.Printf("%s:     \t %s \n", k, v.S())
-		if v.Html5Mode == v.LwditaMode || v.LwditaMode == "" {
-			agreedMode = v.Html5Mode
+		var bothMode, soleMode TagMode
+		bothMode = ""
+		soleMode = ""
+		// fmt.Printf("DBG: %s: \t%s \t%s \n", tag, Hmode, Lmode)
+		// fmt.Printf("%s:     \t %s \n", tag, v.S())
+		if Hmode == Lmode {
+			bothMode = Hmode
+		} else if Lmode == "" {
+			soleMode = Hmode
+			tag = "H:" + tag
+		} else if Hmode == "" {
+			soleMode = Lmode
+			tag = "L:" + tag
+		} else if Hmode != Lmode {
+			fmt.Printf("DISagreement: <%s> H:%s L:%s \n",
+				tag, Hmode, Lmode)
+			continue
 		} else {
-			agreedMode = v.LwditaMode
+			panic(fmt.Sprintf("oh shit:<%s>  H:%s L:%s",
+				tag, Hmode, Lmode))
 		}
-		switch agreedMode {
+		var s string
+		s = (bothMode.S() + soleMode.S())
+		if len(s) < 4 || len(s) > 6 {
+			panic(fmt.Sprintf("oh shit: <%s> H:%s L:%s 2:%s 1:%s",
+				tag, Hmode, Lmode, bothMode, soleMode))
+		}
+		tag += " "
+		switch s[len(s)-4:] {
 		case "BLCK":
-			BLCKs += k + " "
+			BLCKs = append(BLCKs, tag)
 		case "INLN":
-			INLNs += k + " "
+			INLNs = append(INLNs, tag)
 		case "BOTH":
-			BOTHs += k + " "
+			BOTHs = append(BOTHs, tag)
 		case "EMBD":
-			EMBDs += k + " "
+			EMBDs = append(EMBDs, tag)
 		case "":
-			fmt.Printf("DISagreement on: %s \n", k)
+			fmt.Printf("DISagreement on: %s \n", tag)
+		default:
+			fmt.Printf("WTF: <%s> both<%s> sole<%s> \n",
+				tag, bothMode, soleMode)
 		}
 	}
-	fmt.Printf("BLOX: %s \n", BLCKs)
-	fmt.Printf("INLN: %s \n", INLNs)
-	fmt.Printf("BOTH: %s \n", BOTHs)
-	fmt.Printf("EMBD: %s \n", EMBDs)
+	sort.Strings(BLCKs)
+	sort.Strings(INLNs)
+	sort.Strings(BOTHs)
+	sort.Strings(EMBDs)
+	fmt.Printf("BLOX: %v \n", BLCKs)
+	fmt.Printf("INLN: %v \n", INLNs)
+	fmt.Printf("BOTH: %v \n", BOTHs)
+	fmt.Printf("EMBD: %v \n", EMBDs)
 }
 
 func (TS TagSummary) String() string {
@@ -182,26 +212,41 @@ func setSchemaAndBLKorINL(tags []string, isLwdita bool, tagMode TagMode) {
 	}
 }
 
+// An inline element cannot contain a block-level element!
+
+// == HTML ==
+
 // HtmlBlockTags is TODO
 var HtmlBlockTags = []string{
-	"address", "article", "aside", "blockquote", "body", "canvas", "dd",
-	"div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form",
-	"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html", "li",
-	"main", "nav", "noscript", "ol", "output", "p", "pre", "section", "table",
-	"tfoot", "title", "ul", "video"}
+	"address", "article", "aside", "blockquote", "body",
+	"canvas", "dd", "div", "dl", "dt", "fieldset",
+	"figcaption", "figure", "footer", "form",
+	"h1", "h2", "h3", "h4", "h5", "h6", /* "head", */
+	"header", "hr" /* "html", */, "li", "main", "nav",
+	"noscript", "ol", "output", "p", "pre", "section",
+	"table", "tfoot" /* "title", */, "ul", "video"}
 
 // HtmlInlineTags is TODO
 var HtmlInlineTags = []string{
-	"a", "abbr", "acronym", "b", "bdo", "big", "br", "button",
-	"cite", "code", "dfn", "em", "i", "img", "input", "kbd",
-	"label", "link", "map", "object", "q", "samp", "script",
-	"select", "small", "span", "strong", "sub", "sup",
-	"textarea", "time", "tt", "var"}
+	"a", "abbr", "acronym", "b", "bdo",
+	"big", "br", "button", "cite", "code",
+	"dfn", "em", "i", "img", "input",
+	"kbd", "label" /* "link", */, "map",
+	"object", /* "output", */
+	"q", "samp", "script", "select", "small",
+	"span", "strong", "sub", "sup", "textarea",
+	"time", "tt", "var"}
+
+// HtmlEmbedTags is TODO
+var HtmlEmbedTags = []string{
+	"html", "head", "link", "title"}
 
 // HtmlSelfClosingTags is TOTO
 var HtmlSelfClosingTags = []string{
 	"area", "base", "br", "col", "embed", "hr", "img", "input",
 	"link", "meta", "param", "source", "track", "wbr"}
+
+// == LwDITA ==
 
 //  "To reuse block-level content, authors will use @conref.
 // For phrase-level content, authors will use @keyref."
