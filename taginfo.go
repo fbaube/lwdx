@@ -1,10 +1,10 @@
 package lwdx
 
-// TODO Use EMBED, for DTDs, and maybe also LwDITA samples
+// TODO: Use Go EMBED directive for DTDs and LwDITA samples
 
 import (
 	"fmt"
-	SU "github.com/fbaube/stringutils"
+	// SU "github.com/fbaube/stringutils"
 )
 
 /*
@@ -18,10 +18,10 @@ video:
 type TagMode string
 
 var TagModes = []TagMode{
-	"BLK",
-	"INL",
-	"BTH", // Both
-	"EMB", // Embedded, i.e. N/A
+	"BLCK",
+	"INLN",
+	"BOTH", // Both
+	"EMBD", // Embedded, i.e. not rendered, or N/A
 }
 
 func (tm TagMode) S() string {
@@ -33,27 +33,27 @@ func (tm TagMode) String() string {
 }
 
 func (tm TagMode) IsBlock() bool {
-	if tm == "BLK" || tm == "BTH" {
+	if tm == "BLCK" || tm == "BOTH" {
 		return true
 	}
-	if tm == "INL" || tm == "EMB" {
+	if tm == "INLN" || tm == "EMBD" {
 		return false
 	}
 	panic("lwx.IsBlock:" + tm.S())
 }
 
 func (tm TagMode) IsInline() bool {
-	if tm == "INL" || tm == "BTH" {
+	if tm == "INLN" || tm == "BOTH" {
 		return true
 	}
-	if tm == "BLK" || tm == "EMB" {
+	if tm == "BLCK" || tm == "EMBD" {
 		return false
 	}
 	panic("lwx.IsInline:" + tm.S())
 }
 
 func (tm TagMode) IsEmbed() bool {
-	return tm == "EMB"
+	return tm == "EMBD"
 }
 
 // TagSummary is a set of booleans that quickly characterizes a tag, no
@@ -63,75 +63,122 @@ func (tm TagMode) IsEmbed() bool {
 // B & I v EMPH & STRONG), so this approach kinda makes sense.
 // .
 type TagSummary struct {
-	IsHtml5  bool
-	IsLwdita bool
-	TagMode
-	IsSelfclsg bool // self-closing, like <br/>
-	IsHidden   bool
+	// IsHtml5  bool
+	// IsLwdita bool
+	// TagMode
+	Html5Mode  TagMode
+	LwditaMode TagMode
+	// IsSelfClsg bool // self-closing, like <br/>
+	// IsHidden   bool
 }
 
 // TagTypes is a singleton for quick characterization
-// of all LwDITA tags and common HTML5 tags.
+// of all LwDITA tags and common HTML5 tags (not the
+// exotic ones, whose handling will be ignored for now).
 // .
-var TagSummaries TagTypeMapper
+var TagInfo TagTypeMapper
 
 // init uses the slices of tags defined below to initialize descriptors.
 // .
 func init() {
-	TagSummaries = make(map[string]TagSummary)
-	TagSummaries["test1"] = TagSummary{true, true, "BTH", true, false}
-	TagSummaries["test2"] = TagSummary{true, true, "BTH", false, false}
-	setSchemaAndBLKorINL(HtmlBlockTags, true, false, "BLK")
-	setSchemaAndBLKorINL(HtmlInlineTags, true, false, "INL")
-	setSchemaAndBLKorINL(LwDitaBlockTags, false, true, "BLK")
-	setSchemaAndBLKorINL(LwDitaInlineTags, false, true, "INL")
-	setSchemaAndBLKorINL(LwDitaModelessTags, false, true, "INL")
+	TagInfo = make(map[string]TagSummary)
+	TagInfo["test1"] = TagSummary{"BOTH", "BOTH"}
+	TagInfo["test2"] = TagSummary{"BLCK", "INLN"}
+	setSchemaAndBLKorINL(HtmlBlockTags, false, "BLCK")
+	setSchemaAndBLKorINL(HtmlInlineTags, false, "INLN")
+	setSchemaAndBLKorINL(LwDitaBlockTags, true, "BLCK")
+	setSchemaAndBLKorINL(LwDitaInlineTags, true, "INLN")
+	setSchemaAndBLKorINL(LwDitaModelessTags, true, "INLN")
 
-	var BLKs, INLs string
-	for k, v := range TagSummaries {
-		// fmt.Printf("%s: \t%s \n", k, v)
+	var BLCKs, INLNs, BOTHs, EMBDs string
+	for k, v := range TagInfo {
+		if v.Html5Mode == "" && v.LwditaMode == "" {
+			panic("BLEAGH")
+		}
+		var agreedMode TagMode
+		// fmt.Printf("DBG: %s: \t%s \t%s \n",
+		//	k, v.Html5Mode, v.LwditaMode)
 		// fmt.Printf("%s:     \t %s \n", k, v.S())
-		switch v.TagMode.S() {
-		case "BLK":
-			BLKs += k + " "
-		case "INL":
-			INLs += k + " "
+		if v.Html5Mode == v.LwditaMode || v.LwditaMode == "" {
+			agreedMode = v.Html5Mode
+		} else {
+			agreedMode = v.LwditaMode
+		}
+		switch agreedMode {
+		case "BLCK":
+			BLCKs += k + " "
+		case "INLN":
+			INLNs += k + " "
+		case "BOTH":
+			BOTHs += k + " "
+		case "EMBD":
+			EMBDs += k + " "
 		case "":
-			panic("no_TagMode")
+			fmt.Printf("DISagreement on: %s \n", k)
 		}
 	}
-	fmt.Printf("BLOCKS: %s \n", BLKs)
-	fmt.Printf("INLINE: %s \n", INLs)
+	fmt.Printf("BLOX: %s \n", BLCKs)
+	fmt.Printf("INLN: %s \n", INLNs)
+	fmt.Printf("BOTH: %s \n", BOTHs)
+	fmt.Printf("EMBD: %s \n", EMBDs)
 }
 
 func (TS TagSummary) String() string {
-	return fmt.Sprintf("%s,html:%s,lwdita:%s",
-		TS.TagMode, SU.Yn(TS.IsHtml5), SU.Yn(TS.IsLwdita))
+	return fmt.Sprintf("html5<%s>lwdita<%s>",
+		TS.Html5Mode, TS.LwditaMode)
 }
 
-func setSchemaAndBLKorINL(tags []string,
-	isHtml bool, isLwd bool, tagMode string) {
+var dupedTags []string
+var collidingTags []*TagSummary
+
+func setSchemaAndBLKorINL(tags []string, isLwdita bool, tagMode TagMode) {
 	var TS TagSummary
 	var ok bool
+	if tagMode == "" {
+		panic("NO TAG MODE")
+	}
 	for _, s := range tags {
-		if TS, ok = TagSummaries[s]; !ok {
+		if TS, ok = TagInfo[s]; !ok {
+			// The tag is not listed in the map yet.
 			TS = *new(TagSummary)
+			// Is okay to insert
+			if isLwdita {
+				TS.LwditaMode = tagMode
+			} else {
+				TS.Html5Mode = tagMode
+			}
 		} else {
-			fmt.Printf("Tag is duped: %s \n", s)
-			if TS.TagMode.S() != tagMode {
+			// The tag IS already listed in the map, as
+			// var TS, presumably in another XML schema
+			// fmt.Printf("Tag is duped: %s \n", s)
+			dupedTags = append(dupedTags, s)
+			// Check for multiple in same schema
+			if (TS.LwditaMode != "") && isLwdita {
+				fmt.Printf("Tag ERROR: " +
+					"multiple LwDITA entries for: " + s)
+			}
+			if (TS.Html5Mode != "") && !isLwdita {
+				fmt.Printf("Tag ERROR: " +
+					"multiple Html5 entries for: " + s)
+			}
+			// Is okay to insert
+			if isLwdita {
+				TS.LwditaMode = tagMode
+			} else {
+				TS.Html5Mode = tagMode
+			}
+			// Check for [dis]agreement on TagMode.
+			if (TS.Html5Mode != "") &&
+				(TS.LwditaMode != "") &&
+				(TS.Html5Mode != TS.LwditaMode) {
 				// panic("FAIL on BLK v INL: " + s)
-				fmt.Printf("OOPS tag: %s (%s != %s) \n",
-					s, TS.TagMode, tagMode)
+				fmt.Printf("Tag OOPS: <%s>: "+
+					"Html5 <%s> != LwDITA <%s> \n",
+					s, TS.Html5Mode, TS.LwditaMode)
 			}
 		}
-		if isHtml {
-			TS.IsHtml5 = true
-		}
-		if isLwd {
-			TS.IsLwdita = true
-		}
-		TS.TagMode = TagMode(tagMode)
-		TagSummaries[s] = TS
+		// TS.TagMode = TagMode(tagMode)
+		TagInfo[s] = TS
 	}
 }
 
@@ -178,12 +225,14 @@ var LwDitaModelessTags = []string{
 	"media-muted", "video-poster", "media-source", "media-track",
 	"video"}
 
-var TTinline = TagSummary{false, false, "INLN", false, false}
-var TTblock = TagSummary{false, false, "BLCK", false, false}
-var TTembed = TagSummary{false, false, "EMBD", false, false}
+// var TTinline = TagSummary{false, false, "INLN", false, false}
+// var TTblock = TagSummary{false, false, "BLCK", false, false}
+// var TTembed = TagSummary{false, false, "EMBD", false, false}
 
 // TagTypeMapper is a type created for var gxml.TagTypes
 type TagTypeMapper map[string]TagSummary
+
+/*
 
 // PredefinedTagTypes is a singleton for quick characterization
 // of all LwDITA tags and common HTML5 tags.
@@ -227,3 +276,5 @@ var PredefinedTagTypes = TagTypeMapper{
 	"topicref":  {false, false, "BLCK", false, false},
 	"navtitle":  {false, false, "BLCK", false, false},
 }
+
+*/
