@@ -15,6 +15,8 @@ type LwD_XMH_gtag struct {
 	Mdita         string
 }
 
+/*
+
 // BLK_tags is all the tags that either (a) are considered to be block tags
 // by HTML & CSS, or (b) should in any case be output starting on a new line.
 // The values here should be based on references, and not just pulled out of
@@ -68,6 +70,8 @@ var INL_tags = []string{
 	"ph",
 	"span",
 }
+
+*/
 
 // OldTags is Appendix A.1 DITA 1.3 elements in LwDITA -n-
 // "This topic lists the DITA 1.3 elements that are available in LwDITA.

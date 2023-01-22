@@ -83,16 +83,14 @@ var TagInfo TagTypeMapper
 // .
 func init() {
 	TagInfo = make(map[string]TagSummary)
-	TagInfo["test1"] = TagSummary{"BOTH", "BOTH"}
-	TagInfo["test2"] = TagSummary{"BLCK", "INLN"}
-	setSchemaAndBLKorINL(HtmlBlockTags, false, "BLCK")
-	setSchemaAndBLKorINL(HtmlInlineTags, false, "INLN")
-	setSchemaAndBLKorINL(HtmlEmbedTags, false, "EMBD")
-	setSchemaAndBLKorINL(LwDitaBlockTags, true, "BLCK")
-	setSchemaAndBLKorINL(LwDitaInlineTags, true, "INLN")
-	setSchemaAndBLKorINL(LwDitaModelessTags, true, "INLN")
+	setSchemaAndBLKorINL(HtmlBlockTags, false, "BLOCK")
+	setSchemaAndBLKorINL(HtmlInlinTags, false, "INLIN")
+	setSchemaAndBLKorINL(HtmlOtherTags, false, "OTHER")
+	setSchemaAndBLKorINL(LwditaBlockTags, true, "BLOCK")
+	setSchemaAndBLKorINL(LwditaInlinTags, true, "INLIN")
+	setSchemaAndBLKorINL(LwditaOtherTags, true, "OTHER")
 
-	var BLCKs, INLNs, BOTHs, EMBDs []string
+	var BLOCKs, INLINs, OTHERs []string
 	for tag, v := range TagInfo {
 		Hmode := v.Html5Mode
 		Lmode := v.LwditaMode
@@ -122,20 +120,18 @@ func init() {
 		}
 		var s string
 		s = (bothMode.S() + soleMode.S())
-		if len(s) < 4 || len(s) > 6 {
+		if len(s) < 5 || len(s) > 7 {
 			panic(fmt.Sprintf("oh shit: <%s> H:%s L:%s 2:%s 1:%s",
 				tag, Hmode, Lmode, bothMode, soleMode))
 		}
 		tag += " "
-		switch s[len(s)-4:] {
-		case "BLCK":
-			BLCKs = append(BLCKs, tag)
-		case "INLN":
-			INLNs = append(INLNs, tag)
-		case "BOTH":
-			BOTHs = append(BOTHs, tag)
-		case "EMBD":
-			EMBDs = append(EMBDs, tag)
+		switch s[len(s)-5:] {
+		case "BLOCK":
+			BLOCKs = append(BLOCKs, tag)
+		case "INLIN":
+			INLINs = append(INLINs, tag)
+		case "OTHER":
+			OTHERs = append(OTHERs, tag)
 		case "":
 			fmt.Printf("DISagreement on: %s \n", tag)
 		default:
@@ -143,14 +139,12 @@ func init() {
 				tag, bothMode, soleMode)
 		}
 	}
-	sort.Strings(BLCKs)
-	sort.Strings(INLNs)
-	sort.Strings(BOTHs)
-	sort.Strings(EMBDs)
-	fmt.Printf("BLOX: %v \n", BLCKs)
-	fmt.Printf("INLN: %v \n", INLNs)
-	fmt.Printf("BOTH: %v \n", BOTHs)
-	fmt.Printf("EMBD: %v \n", EMBDs)
+	sort.Strings(BLOCKs)
+	sort.Strings(INLINs)
+	sort.Strings(OTHERs)
+	fmt.Printf("BLOCK: %v \n", BLOCKs)
+	fmt.Printf("INLIN: %v \n", INLINs)
+	fmt.Printf("OTHER: %v \n", OTHERs)
 }
 
 func (TS TagSummary) String() string {
@@ -188,8 +182,8 @@ func setSchemaAndBLKorINL(tags []string, isLwdita bool, tagMode TagMode) {
 					"multiple LwDITA entries for: " + s)
 			}
 			if (TS.Html5Mode != "") && !isLwdita {
-				fmt.Printf("Tag ERROR: " +
-					"multiple Html5 entries for: " + s)
+				fmt.Printf("Tag ERROR: "+
+					"multiple Html5 entries for: %s \n", s)
 			}
 			// Is okay to insert
 			if isLwdita {
@@ -211,115 +205,3 @@ func setSchemaAndBLKorINL(tags []string, isLwdita bool, tagMode TagMode) {
 		TagInfo[s] = TS
 	}
 }
-
-// An inline element cannot contain a block-level element!
-
-// == HTML ==
-
-// HtmlBlockTags is TODO
-var HtmlBlockTags = []string{
-	"address", "article", "aside", "blockquote", "body",
-	"canvas", "dd", "div", "dl", "dt", "fieldset",
-	"figcaption", "figure", "footer", "form",
-	"h1", "h2", "h3", "h4", "h5", "h6", /* "head", */
-	"header", "hr" /* "html", */, "li", "main", "nav",
-	"noscript", "ol", "output", "p", "pre", "section",
-	"table", "tfoot" /* "title", */, "ul", "video"}
-
-// HtmlInlineTags is TODO
-var HtmlInlineTags = []string{
-	"a", "abbr", "acronym", "b", "bdo",
-	"big", "br", "button", "cite", "code",
-	"dfn", "em", "i", "img", "input",
-	"kbd", "label" /* "link", */, "map",
-	"object", /* "output", */
-	"q", "samp", "script", "select", "small",
-	"span", "strong", "sub", "sup", "textarea",
-	"time", "tt", "var"}
-
-// HtmlEmbedTags is TODO
-var HtmlEmbedTags = []string{
-	"html", "head", "link", "title"}
-
-// HtmlSelfClosingTags is TOTO
-var HtmlSelfClosingTags = []string{
-	"area", "base", "br", "col", "embed", "hr", "img", "input",
-	"link", "meta", "param", "source", "track", "wbr"}
-
-// == LwDITA ==
-
-//  "To reuse block-level content, authors will use @conref.
-// For phrase-level content, authors will use @keyref."
-
-// LwDitaBlockTags is TODO
-var LwDitaBlockTags = []string{
-	"dd", "dlentry", "dl", "dt", "fig", "li", "map", "ol", "p", "pre",
-	"section", "shortdesc", "simpletable", "title", "topic", "ul"}
-
-// LwDitaInlineTags is TODO
-var LwDitaInlineTags = []string{
-	"b", "i", "ph", "sup", "sub", "u",
-	"xref", "fn", "image", "linktext", "span", "topicref"}
-
-// LwDitaModelessTags is TODO
-var LwDitaModelessTags = []string{
-	"alt", "body", "data", "desc", "keydef", "note", "navtitle",
-	"prolog", "stentry", "sthead", "strow", "topicmeta",
-	// XML elements in LwDITA that are new
-	"audio", "media-autoplay", "media-controls", "media-loop",
-	"media-muted", "video-poster", "media-source", "media-track",
-	"video"}
-
-// var TTinline = TagSummary{false, false, "INLN", false, false}
-// var TTblock = TagSummary{false, false, "BLCK", false, false}
-// var TTembed = TagSummary{false, false, "EMBD", false, false}
-
-// TagTypeMapper is a type created for var gxml.TagTypes
-type TagTypeMapper map[string]TagSummary
-
-/*
-
-// PredefinedTagTypes is a singleton for quick characterization
-// of all LwDITA tags and common HTML5 tags.
-var PredefinedTagTypes = TagTypeMapper{
-	// INLINE TAGS
-	"b":      {false, false, "INLN", false, false},
-	"i":      {false, false, "INLN", false, false},
-	"u":      {false, false, "INLN", false, false},
-	"em":     {false, false, "INLN", false, false},
-	"strong": {false, false, "INLN", false, false},
-	"ph":     {false, false, "INLN", false, false},
-	"span":   {false, false, "INLN", false, false},
-	// BLOCK TAGS
-	"p":         {false, false, "BLCK", false, false},
-	"topic":     {false, false, "BLCK", false, false},
-	"title":     {false, false, "BLCK", false, false},
-	"shortdesc": {false, false, "BLCK", false, false},
-	"body":      {false, false, "BLCK", false, false},
-	"section":   {false, false, "BLCK", false, false},
-	"ul":        {false, false, "BLCK", false, false},
-	"ol":        {false, false, "BLCK", false, false},
-	"li":        {false, false, "BLCK", false, false},
-	"taskbody":  {false, false, "BLCK", false, false},
-	"context":   {false, false, "BLCK", false, false},
-	"prereq":    {false, false, "BLCK", false, false},
-	"steps":     {false, false, "BLCK", false, false},
-	"step":      {false, false, "BLCK", false, false},
-	"table":     {false, false, "BLCK", false, false},
-	"hr":        {false, false, "BLCK", false, false},
-	"h1":        {false, false, "BLCK", false, false},
-	"h2":        {false, false, "BLCK", false, false},
-	"h3":        {false, false, "BLCK", false, false},
-	"h4":        {false, false, "BLCK", false, false},
-	"h5":        {false, false, "BLCK", false, false},
-	"author":    {false, false, "BLCK", false, false},
-	"keydef":    {false, false, "BLCK", false, false},
-	"keyword":   {false, false, "BLCK", false, false},
-	"keywords":  {false, false, "BLCK", false, false},
-	"map":       {false, false, "BLCK", false, false},
-	"topicmeta": {false, false, "BLCK", false, false},
-	"topicref":  {false, false, "BLCK", false, false},
-	"navtitle":  {false, false, "BLCK", false, false},
-}
-
-*/
