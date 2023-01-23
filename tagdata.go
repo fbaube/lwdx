@@ -2,9 +2,11 @@ package lwdx
 
 // TODO: Use Go EMBED directive for DTDs and LwDITA samples
 
+// TagTypeMapper is a type created for var gxml.TagTypes
+type TagTypeMapper map[string]TagSummary
+
 /*
 Tags with differing Modes:
-
 map: html = image map, lwdita = ToC
 body: lwdita = topic
 video:
@@ -98,53 +100,3 @@ var LwditaOtherTags = []string{
 // var TTinline= TagSummary{false, false, "INLN", false, false}
 // var TTblock = TagSummary{false, false, "BLCK", false, false}
 // var TTembed = TagSummary{false, false, "EMBD", false, false}
-
-// TagTypeMapper is a type created for var gxml.TagTypes
-type TagTypeMapper map[string]TagSummary
-
-/*
-
-// PredefinedTagTypes is a singleton for quick characterization
-// of all LwDITA tags and common HTML5 tags.
-var PredefinedTagTypes = TagTypeMapper{
-	// INLINE TAGS
-	"b":      {false, false, "INLN", false, false},
-	"i":      {false, false, "INLN", false, false},
-	"u":      {false, false, "INLN", false, false},
-	"em":     {false, false, "INLN", false, false},
-	"strong": {false, false, "INLN", false, false},
-	"ph":     {false, false, "INLN", false, false},
-	"span":   {false, false, "INLN", false, false},
-	// BLOCK TAGS
-	"p":         {false, false, "BLCK", false, false},
-	"topic":     {false, false, "BLCK", false, false},
-	"title":     {false, false, "BLCK", false, false},
-	"shortdesc": {false, false, "BLCK", false, false},
-	"body":      {false, false, "BLCK", false, false},
-	"section":   {false, false, "BLCK", false, false},
-	"ul":        {false, false, "BLCK", false, false},
-	"ol":        {false, false, "BLCK", false, false},
-	"li":        {false, false, "BLCK", false, false},
-	"taskbody":  {false, false, "BLCK", false, false},
-	"context":   {false, false, "BLCK", false, false},
-	"prereq":    {false, false, "BLCK", false, false},
-	"steps":     {false, false, "BLCK", false, false},
-	"step":      {false, false, "BLCK", false, false},
-	"table":     {false, false, "BLCK", false, false},
-	"hr":        {false, false, "BLCK", false, false},
-	"h1":        {false, false, "BLCK", false, false},
-	"h2":        {false, false, "BLCK", false, false},
-	"h3":        {false, false, "BLCK", false, false},
-	"h4":        {false, false, "BLCK", false, false},
-	"h5":        {false, false, "BLCK", false, false},
-	"author":    {false, false, "BLCK", false, false},
-	"keydef":    {false, false, "BLCK", false, false},
-	"keyword":   {false, false, "BLCK", false, false},
-	"keywords":  {false, false, "BLCK", false, false},
-	"map":       {false, false, "BLCK", false, false},
-	"topicmeta": {false, false, "BLCK", false, false},
-	"topicref":  {false, false, "BLCK", false, false},
-	"navtitle":  {false, false, "BLCK", false, false},
-}
-
-*/

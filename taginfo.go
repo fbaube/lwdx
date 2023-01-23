@@ -10,7 +10,6 @@ import (
 
 /*
 Tags with differing Modes:
-
 map: html = image map, lwdita = ToC
 body: lwdita = topic
 video:
@@ -18,11 +17,17 @@ video:
 
 type TagMode string
 
-var TagModes = []TagMode{
-	"BLCK",
-	"INLN",
-	"BOTH", // Both
-	"EMBD", // Embedded, i.e. not rendered, or N/A
+func GetTagSummaryByTagName(s string) *TagSummary {
+	if s == "" {
+		return nil
+	}
+	var TS TagSummary
+	var ok bool
+	TS, ok = TagInfo[s]
+	if !ok {
+		return nil
+	}
+	return &TS
 }
 
 func (tm TagMode) S() string {
@@ -33,30 +38,6 @@ func (tm TagMode) String() string {
 	return string(tm)
 }
 
-func (tm TagMode) IsBlock() bool {
-	if tm == "BLCK" || tm == "BOTH" {
-		return true
-	}
-	if tm == "INLN" || tm == "EMBD" {
-		return false
-	}
-	panic("lwx.IsBlock:" + tm.S())
-}
-
-func (tm TagMode) IsInline() bool {
-	if tm == "INLN" || tm == "BOTH" {
-		return true
-	}
-	if tm == "BLCK" || tm == "EMBD" {
-		return false
-	}
-	panic("lwx.IsInline:" + tm.S())
-}
-
-func (tm TagMode) IsEmbed() bool {
-	return tm == "EMBD"
-}
-
 // TagSummary is a set of booleans that quickly characterizes a tag, no
 // matter what kind of "common" XML file it is found in - HTML5, LwDITA,
 // maybe also DITA. There's a bit of mix & match going on between LwDITA
@@ -64,9 +45,6 @@ func (tm TagMode) IsEmbed() bool {
 // B & I v EMPH & STRONG), so this approach kinda makes sense.
 // .
 type TagSummary struct {
-	// IsHtml5  bool
-	// IsLwdita bool
-	// TagMode
 	Html5Mode  TagMode
 	LwditaMode TagMode
 	// IsSelfClsg bool // self-closing, like <br/>
@@ -111,7 +89,7 @@ func init() {
 			soleMode = Lmode
 			tag = "L:" + tag
 		} else if Hmode != Lmode {
-			fmt.Printf("DISagreement: <%s> H:%s L:%s \n",
+			fmt.Printf("Tag <%s> disagreement: H:%s L:%s \n",
 				tag, Hmode, Lmode)
 			continue
 		} else {
@@ -133,7 +111,8 @@ func init() {
 		case "OTHER":
 			OTHERs = append(OTHERs, tag)
 		case "":
-			fmt.Printf("DISagreement on: %s \n", tag)
+			// fmt.Printf("DISagreement on: %s \n", tag)
+			panic("OOPS: " + tag)
 		default:
 			fmt.Printf("WTF: <%s> both<%s> sole<%s> \n",
 				tag, bothMode, soleMode)
@@ -142,9 +121,9 @@ func init() {
 	sort.Strings(BLOCKs)
 	sort.Strings(INLINs)
 	sort.Strings(OTHERs)
-	fmt.Printf("BLOCK: %v \n", BLOCKs)
-	fmt.Printf("INLIN: %v \n", INLINs)
-	fmt.Printf("OTHER: %v \n", OTHERs)
+	// fmt.Printf("BLOCK: %v \n", BLOCKs)
+	// fmt.Printf("INLIN: %v \n", INLINs)
+	// fmt.Printf("OTHER: %v \n", OTHERs)
 }
 
 func (TS TagSummary) String() string {
@@ -195,8 +174,7 @@ func setSchemaAndBLKorINL(tags []string, isLwdita bool, tagMode TagMode) {
 			if (TS.Html5Mode != "") &&
 				(TS.LwditaMode != "") &&
 				(TS.Html5Mode != TS.LwditaMode) {
-				// panic("FAIL on BLK v INL: " + s)
-				fmt.Printf("Tag OOPS: <%s>: "+
+				fmt.Printf("Tag <%s>: "+
 					"Html5 <%s> != LwDITA <%s> \n",
 					s, TS.Html5Mode, TS.LwditaMode)
 			}
