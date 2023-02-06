@@ -8,12 +8,10 @@ import (
 	// SU "github.com/fbaube/stringutils"
 )
 
-/*
-Tags with differing Modes:
-map: html = image map, lwdita = ToC
-body: lwdita = topic
-video:
-*/
+// Tags with differing Modes:
+// map: html = image map, lwdita = ToC
+// body: lwdita = topic
+// video:
 
 type TagMode string
 

@@ -15,7 +15,7 @@ type LwD_XMH_gtag struct {
 	Mdita         string
 }
 
-/*
+/* BLK & INL tags (old)
 
 // BLK_tags is all the tags that either (a) are considered to be block tags
 // by HTML & CSS, or (b) should in any case be output starting on a new line.

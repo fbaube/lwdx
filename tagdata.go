@@ -5,12 +5,10 @@ package lwdx
 // TagTypeMapper is a type created for var gxml.TagTypes
 type TagTypeMapper map[string]TagSummary
 
-/*
-Tags with differing Modes:
-map: html = image map, lwdita = ToC
-body: lwdita = topic
-video:
-*/
+// Tags with differing Modes:
+// map: html = image map, lwdita = ToC
+// body: lwdita = topic
+// video:
 
 // An inline element cannot contain a block-level element!
 

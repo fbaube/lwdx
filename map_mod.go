@@ -2,10 +2,11 @@ package lwdx
 
 // import . "github.com/fbaube/dtdx"
 
-/* FIXME
+/* FIXME stuff from DTDs
+
 var UnparsedMapModEnts = []UnparsedEntDef{
 
-	/*
+	/ *
 	   <!-- ============================================================= -->
 	   <!--                    DOMAINS ATTRIBUTE OVERRIDE                 -->
 	   <!-- ============================================================= -->
@@ -16,7 +17,7 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	UnparsedEntDef{"included-domains", ""},
 	UnparsedEntDef{"excluded-attributes", ""},
 
-	/*
+	/ *
 	   <!-- ============================================================= -->
 	   <!--                    EXTENSION POINTS                 -->
 	   <!-- ============================================================= -->
@@ -27,7 +28,7 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	UnparsedEntDef{"%ph", "ph"},
 	UnparsedEntDef{"%filter-adds", " "},
 
-	/*
+	/ *
 	   <!-- ============================================================= -->
 	   <!--                    COMMON DECLARATIONS                       -->
 	   <!-- ============================================================= -->
@@ -36,7 +37,7 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	* /
 	UnparsedEntDef{"%all-inline", "#PCDATA|%ph;"},
 
-	/*
+	/ *
 	   <!--common attributes-->
 	   <!ENTITY % filters
 	               'props      CDATA                              #IMPLIED
@@ -45,7 +46,7 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	UnparsedEntDef{"%filters", `
             'props      CDATA                              #IMPLIED
              %filter-adds; '`},
-	/*
+	/ *
 	   <!ENTITY % reuse
 	               'id      NMTOKEN                            #IMPLIED
 	                conref  CDATA                              #IMPLIED  ' >
@@ -120,4 +121,4 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	                %variable-links;
 	                class CDATA "- map/topicref ">
 */
-// FIXME:190 }
+// FIXME }
