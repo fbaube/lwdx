@@ -53,7 +53,7 @@ var UnparsedMapModEnts = []UnparsedEntDef{
 	   UnparsedEntDef{"%reuse", `
 	               'id      NMTOKEN                            #IMPLIED
 	                conref  CDATA                              #IMPLIED  '`},
-	   /*
+	   / *
 	   <!ENTITY % reference-content
 	               'href      CDATA                            #IMPLIED
 	                format    CDATA                            #IMPLIED
