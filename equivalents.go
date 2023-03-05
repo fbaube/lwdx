@@ -1,9 +1,5 @@
 package lwdx
 
-type Equivs struct {
-	Xdita, Hdita, Mdita string
-}
-
 // Equivalents is an imperfect attampt to correlate tags across
 // LwDITA languages.
 //

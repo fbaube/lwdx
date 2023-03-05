@@ -2,19 +2,6 @@ package lwdx
 
 // THIS FILE is based mostly on the official LwDITA PDF dpcuments.
 
-// LwD_XMH_gtag is a generic "tag" used to identify markup structures
-// (both elements and attributes) that are common to all three flavors
-// of LwDITA.
-//
-// It has a "master" ComponentName and the variants for (XHM)DITA.
-// .
-type LwD_XMH_gtag struct {
-	ComponentName string
-	Xdita         string
-	Hdita         string
-	Mdita         string
-}
-
 /* BLK & INL tags (old)
 
 // BLK_tags is all the tags that either (a) are considered to be block tags
