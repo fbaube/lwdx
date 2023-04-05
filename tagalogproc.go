@@ -22,7 +22,7 @@ func init() {
 		s = pTE.Xdita
 		_, ok = XditaToTE[s]
 		if ok {
-			if s != "" {
+			if s != "" && s != "?" {
 				fmt.Println("XDita dupe:", s)
 			}
 		} else {
@@ -32,8 +32,8 @@ func init() {
 		s = pTE.Hdita
 		_, ok = HditaToTE[s]
 		if ok {
-			if s != "" {
-				fmt.Println("HDita dupe:", s)
+			if s != "" && s != "?" {
+				fmt.Println("HDita dupe:", s, "(no prob)")
 			}
 		} else {
 			HditaToTE[s] = pTE

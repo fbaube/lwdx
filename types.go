@@ -2,12 +2,20 @@ package lwdx
 
 // TODO: Use Go EMBED directive for DTDs and LwDITA samples
 
+type void struct{}
+
+var aVoid void
+
+type BlockInlineOther struct {
+	IsBlock, IsInline bool
+}
+
 // TagalogEntry is one record in a Tagalog - a Tag catalog
 // .
 type TagalogEntry struct {
 	CTType
 	Xdita, Hdita, Mdita string
-	IsBlock, IsInline   bool
+	BlockInlineOther    // IsBlock, IsInline   bool
 	// IsSelfClsg bool // self-closing, like <br/>
 	// IsHidden   bool
 }
