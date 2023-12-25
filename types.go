@@ -1,5 +1,7 @@
 package lwdx
 
+import "fmt"
+
 // TODO: Use Go EMBED directive for DTDs and LwDITA samples
 
 type void struct{}
@@ -21,7 +23,10 @@ type TagalogEntry struct {
 }
 
 func (p *TagalogEntry) String() string {
-	return "(a TagalogEntry)"
+	// return "(a TagalogEntry)"
+	return fmt.Sprintf("<CTT:%s B:%t I:%t X:%s H:%s M:%s>",
+	       p.CTType, p.BlockInlineOther.IsBlock,
+	       p.BlockInlineOther.IsInline, p.Xdita, p.Hdita, p.Mdita)
 }
 
 // TagalogListing is a Tag Catalog for the singleton package variable [Tagalog].
