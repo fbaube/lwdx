@@ -76,7 +76,7 @@ func GetTEbyXdita(s string) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	fmt.Printf("Get TE by XDITA: failure for: %s \n", s)
+	fmt.Printf("Get TagalogEntry by XDITA: failure for: %s \n", s)
 	return nil // failTE
 }
 
@@ -85,7 +85,7 @@ func GetTEbyHdita(s string) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	fmt.Printf("Get TE by HDITA: failure for: %s \n", s)
+	fmt.Printf("Get TagalogEntry by HDITA: failure for: %s \n", s)
 	return nil // failTE
 }
 
@@ -94,7 +94,7 @@ func GetTEbyCTType(s CTType) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	fmt.Printf("Get TE by CTType: failure for: %s \n", s)
+	fmt.Printf("Get TagalogEntry by CTType: failure for: %s \n", s)
 	return nil // failTE
 }
 

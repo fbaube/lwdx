@@ -40,7 +40,7 @@ var LwditaOtherTags = []string{
 	// XML elements in LwDITA that are new
 	"audio", "media-autoplay", "media-controls",
 	"media-loop", "media-muted", "video-poster",
-	"media-source", "media-track" /* ,"video" */}
+	"media-source", "media-track", "video" } // video is a lame fix
 
 // var TTinline= TagSummary{false, false, "INLN", false, false}
 // var TTblock = TagSummary{false, false, "BLCK", false, false}

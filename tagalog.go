@@ -302,4 +302,6 @@ var Tagalog TagalogListing = []*TagalogEntry{
 	// are present, the user agent evaluates them in document order and selects
 	// the first playable resource.
 	{CT_TBS, "audio|video>media-source", "audio|video>source", "(hdita)", BIO(false, false)},
+	// BOGUS(?) entry to suppress warnings
+	{CT_TBS, "media-source", "media-source", "media-source", BIO(false, false)},
 }
