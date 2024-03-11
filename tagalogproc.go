@@ -85,6 +85,10 @@ func GetTEbyHdita(s string) *TagalogEntry {
 	if ok {
 		return pTE
 	}
+	// HACK
+	if s == "html" || s == "head" || s == "h1" || s == "h2" {
+	   return nil
+	   }
 	fmt.Printf("Get TagalogEntry by HDITA: failure for: %s \n", s)
 	return nil // failTE
 }
