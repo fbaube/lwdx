@@ -3,6 +3,7 @@ package lwdx
 import (
 	"fmt"
 	SU "github.com/fbaube/stringutils"
+	L "github.com/fbaube/mlog"
 )
 
 var XditaToTE map[string]*TagalogEntry = make(map[string]*TagalogEntry)
@@ -23,7 +24,7 @@ func init() {
 		_, ok = XditaToTE[s]
 		if ok {
 			if s != "" && s != "?" {
-				fmt.Println("XDita dupe:", s)
+				L.L.Warning("XDita dupe: " + s)
 			}
 		} else {
 			XditaToTE[s] = pTE
@@ -33,7 +34,7 @@ func init() {
 		_, ok = HditaToTE[s]
 		if ok {
 			if s != "" && s != "?" {
-				fmt.Println("HDita dupe:", s, "(no prob)")
+				L.L.Warning("HDita dupe: " + s + " (no prob)")
 			}
 		} else {
 			HditaToTE[s] = pTE
@@ -43,7 +44,7 @@ func init() {
 		_, ok = CTTypeToTE[ct]
 		if ok {
 			if ct != "" {
-				fmt.Println("CTType dupe:", ct)
+				L.L.Warning("CTType dupe: " + ct)
 			}
 		} else {
 			CTTypeToTE[ct] = pTE
@@ -52,17 +53,17 @@ func init() {
 	// fmt.Printf("XDITA: %+v \n", XditaToTE)
 	// fmt.Printf("HDITA: %+v \n", HditaToTE)
 
-	fmt.Println("BLOCK:")
+	L.L.Info("BLOCK:")
 	for _, pTE = range Tagalog {
 		if pTE.IsBlock {
-			fmt.Printf("%s \t %s \t %s \n",
+			L.L.Info("%s \t %s \t %s",
 				pTE.CTType, pTE.Xdita, pTE.Hdita)
 		}
 	}
-	fmt.Println("INLINE:")
+	L.L.Info("INLINE:")
 	for _, pTE = range Tagalog {
 		if pTE.IsInline {
-			fmt.Printf("%s \t %s \t %s \n",
+			L.L.Info("%s \t %s \t %s",
 				pTE.CTType, pTE.Xdita, pTE.Hdita)
 		}
 	}
@@ -76,7 +77,7 @@ func GetTEbyXdita(s string) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	fmt.Printf("Get TagalogEntry by XDITA: failure for: %s \n", s)
+	L.L.Warning("Get TagalogEntry by XDITA: failure for: " + s)
 	return nil // failTE
 }
 
@@ -89,7 +90,7 @@ func GetTEbyHdita(s string) *TagalogEntry {
 	if s == "html" || s == "head" || s == "h1" || s == "h2" {
 	   return nil
 	   }
-	fmt.Printf("Get TagalogEntry by HDITA: failure for: %s \n", s)
+	L.L.Warning("Get TagalogEntry by HDITA: failure for: " + s)
 	return nil // failTE
 }
 
@@ -98,7 +99,7 @@ func GetTEbyCTType(s CTType) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	fmt.Printf("Get TagalogEntry by CTType: failure for: %s \n", s)
+	L.L.Warning("Get TagalogEntry by CTType: failure for: " + s)
 	return nil // failTE
 }
 
@@ -109,12 +110,12 @@ func GetTEbyTagAndMarkupType(tag string, mut SU.MarkupType) *TagalogEntry {
 	case SU.MU_type_HTML:
 		return GetTEbyHdita(tag)
 	case SU.MU_type_MKDN:
-		fmt.Printf("tagalogproc:MU-MKDN:L108")
+		fmt.Printf("tagalogproc:MU-MKDN:L114")
 	case SU.MU_type_BIN:
-		fmt.Printf("tagalogproc:MU-BIN:?!?!:L110")
+		fmt.Printf("tagalogproc:MU-BIN:?!?!:L116")
 		return nil
 	default:
-		fmt.Printf("tagalogproc:nil:?!?!:L112")
+		fmt.Printf("tagalogproc:nil:?!?!:L118")
 		return nil
 	}
 	return nil
