@@ -44,7 +44,7 @@ func init() {
 		_, ok = CTTypeToTE[ct]
 		if ok {
 			if ct != "" {
-				L.L.Warning("CTType dupe: " + ct)
+				L.L.Warning("CTType dupe: " + string(ct))
 			}
 		} else {
 			CTTypeToTE[ct] = pTE
@@ -99,7 +99,7 @@ func GetTEbyCTType(s CTType) *TagalogEntry {
 	if ok {
 		return pTE
 	}
-	L.L.Warning("Get TagalogEntry by CTType: failure for: " + s)
+	L.L.Warning("Get TagalogEntry by CTType: failure for: " + string(s))
 	return nil // failTE
 }
 
