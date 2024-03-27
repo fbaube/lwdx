@@ -6,7 +6,7 @@ toolchain go1.22.0
 
 require (
 	github.com/fbaube/mlog v0.0.0-20230904080411-cfac35fed413
-	github.com/fbaube/stringutils v0.0.0-20240318064103-bf7b5a2b5f11
+	github.com/fbaube/stringutils v0.0.0-20240326203406-bf4fec3db0ff
 )
 
 require (
