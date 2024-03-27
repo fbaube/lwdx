@@ -110,7 +110,7 @@ func GetTEbyTagAndMarkupType(tag string, mut SU.MarkupType) *TagalogEntry {
 	case SU.MU_type_HTML:
 		return GetTEbyHdita(tag)
 	case SU.MU_type_MKDN:
-		fmt.Printf("tagalogproc:lacksMKDN:L113")
+		L.L.Warning("tagalogproc:lacksMKDN:L113")
 	case SU.MU_type_BIN:
 		fmt.Printf("tagalogproc:lacksBIN:?!?!:L115")
 		return nil

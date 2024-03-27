@@ -175,9 +175,9 @@ var allHtmlHiddenTags = []string{
 // .
 var AllHtmlVoidTags map[string]void
 var allHtmlVoidTags = []string{
-	"area", "base", "br", "col", "embed",
-	"hr", "img", "input", "link", "meta",
-	/* "param", */ "source", "track", "wbr"}
+        "area", "base", "br", "col", "command", "embed",
+        "hr", "img", "input", "keygen", "link", "meta",
+	"param", "source", "track", "wbr"}
 
 func init() {
 	AllHtmlVoidTags = make(map[string]void)
