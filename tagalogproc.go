@@ -101,17 +101,17 @@ func GetTEbyCTType(s CTType) *TagalogEntry {
 	}
 	L.L.Warning("Get TagalogEntry by CTType: failure for: " + string(s))
 	return nil // failTE
-}
+	}
 
-func GetTEbyTagAndMarkupType(tag string, mut SU.MarkupType) *TagalogEntry {
+func GetTEbyTagAndMarkupType(tag string, mut SU.Raw_type) *TagalogEntry {
 	switch mut {
-	case SU.MU_type_XML:
+	case SU.Raw_type_XML:
 		return GetTEbyXdita(tag)
-	case SU.MU_type_HTML:
+	case SU.Raw_type_HTML:
 		return GetTEbyHdita(tag)
-	case SU.MU_type_MKDN:
+	case SU.Raw_type_MKDN:
 		L.L.Warning("tagalogproc:lacksMKDN:L113")
-	case SU.MU_type_BIN:
+	case SU.Raw_type_BIN:
 		fmt.Printf("tagalogproc:lacksBIN:?!?!:L115")
 		return nil
 	default:
